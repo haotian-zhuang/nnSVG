@@ -256,6 +256,7 @@ nnSVG <- function(input, spatial_coords = NULL, X = NULL,
   out_brisc <- bplapply(ix, function(i) {
     # fit model (intercept-only model if x is NULL)
     y_i <- y[i, ]
+    tryCatch({
     suppressWarnings({
       runtime <- system.time({
         out_i <- BRISC_estimation(coords = coords, y = y_i, x = X, 
@@ -271,6 +272,10 @@ nnSVG <- function(input, spatial_coords = NULL, X = NULL,
       runtime = runtime[["elapsed"]]
     )
     res_i
+    }, error = function(e) {
+    warning(sprintf("Error on row %d: %s", i, conditionMessage(e)))
+    rep(NA, 5)
+    })
   }, BPPARAM = BPPARAM)
   
   # collapse output list into matrix
