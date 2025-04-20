@@ -261,8 +261,7 @@ nnSVG <- function(input, spatial_coords = NULL, X = NULL,
       runtime <- system.time({
         out_i <- BRISC_estimation(coords = coords, y = y_i, x = X, 
                                   cov.model = "exponential", 
-                                  ordering = order_brisc, # neighbor = nn_brisc, 
-                                  n.neighbors = n_neighbors, n_omp = 1, search.type = "tree", # temporary fix for R 4.5
+                                  ordering = order_brisc, neighbor = nn_brisc, 
                                   verbose = verbose)
       })
     })
